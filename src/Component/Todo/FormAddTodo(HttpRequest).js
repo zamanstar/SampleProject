@@ -18,11 +18,27 @@ static contextType = TodosContext;
    
     let todo = {text : this.state.text , done : false};
     //ajax
-    Axios.post('https://react-course-f83b2.firebaseio.com/todos.json', todo)
+    Axios.post('/todos.json', todo)
        .then(response => this.context.add({...todo , key : response.data.name}))
        .catch(err => console.log(err))
     // this.context.add(this.state.text);
     this.setState({text : ''});
+
+
+    // Axios({
+    //   method: 'post',
+    //   url: '/user',
+    //   timeout: 180000, // Let's say you want to wait at least 180 seconds
+    //   data: {
+    //     id: '1234',
+    //   }
+    // })
+    // .then(function (response) {
+    //       console.log(response);
+    // })
+    // .catch(function (error) {
+    //     console.log(error);
+    // });
 }
 
 

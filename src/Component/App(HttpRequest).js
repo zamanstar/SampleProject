@@ -4,7 +4,8 @@ import Header from './Layout/Header';
 import FormAddTodo from './Todo/FormAddTodo(HttpRequest)';
 import TodoList from './Todo/TodoList(HttpRequest)';
 import todoContext from '../Context/Todos';
-import Axios from 'axios';
+// import Axios from 'axios';
+import axios1 from './../Api/ApiTodos';
 
 
 
@@ -22,7 +23,7 @@ class App extends Component{
             todos : [],
             statusDone : false
         }
-        Axios.get('https://react-course-f83b2.firebaseio.com/todos.json')
+        axios1.get('/todos.json')
         .then(response => this.jsonHandler(response.data))
         .catch(err => console.log(err));
     }
@@ -57,7 +58,7 @@ class App extends Component{
     
     deleteTodo(key){
 
-        Axios.delete(`https://react-course-f83b2.firebaseio.com/todos/${key}.json`)
+        axios1.delete(`/todos/${key}.json`)
         .then(response => {
             this.setState(prevState => {
                 return {
@@ -75,7 +76,7 @@ class App extends Component{
         let item = todos.find(x=>x.key === key);   
         let NewTodo = todos.filter(y=>y.key !== key); 
         item.done = true; 
-        Axios.put(`https://react-course-f83b2.firebaseio.com/todos/${key}.json`, {text:item.text, done:item.done})
+        axios1.put(`/todos/${key}.json`, {text:item.text, done:item.done})
          .then(Response =>  {   this.setState(prevState =>{
             return {
                 todos : [...NewTodo,item]

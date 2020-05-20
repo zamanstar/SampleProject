@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './Component/App(HttpRequest)';
 import * as serviceWorker from './serviceWorker';
+// import axios from 'axios';
+
+
+// axios.defaults.baseURL = 'https://react-course-f83b2.firebaseio.com';
+// axios.defaults.timeout = 180000;
 
 ReactDOM.render(
   <React.StrictMode>

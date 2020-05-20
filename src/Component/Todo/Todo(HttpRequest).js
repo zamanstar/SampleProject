@@ -12,7 +12,7 @@ const todosContext = useContext(TodoContext);
 let changeStatus = e => seteditStatus(true);
 
 let editHandler = text => {
-    Axios.put(`https://react-course-f83b2.firebaseio.com/todos/${props.item.key}.json`, {...props.item, text : text})
+    Axios.put(`/todos/${props.item.key}.json`, {...props.item, text : text})
     .then(Response =>  todosContext.edit(props.item.key, text))
     .catch(err => console.log(err))
     seteditStatus(false);
