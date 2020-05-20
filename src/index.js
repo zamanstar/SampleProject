@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './Component/App(Context_Hook)';
+import App from './Component/App(HttpRequest)';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

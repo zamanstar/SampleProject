@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import Todo from './Todo(Context_Hook)';
+import Todo from './Todo(Context_Hook_func)';
 import TodoContext from '../../Context/Todos';
 
 

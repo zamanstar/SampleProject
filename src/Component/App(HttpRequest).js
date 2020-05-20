@@ -1,9 +1,10 @@
 import React , { Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import Header from './Layout/Header';
-import FormAddTodo from './Todo/FormAddTodo(Context_Hook_Class)';
-import TodoList from './Todo/TodoList(Context_Hook_func)';
+import FormAddTodo from './Todo/FormAddTodo(HttpRequest)';
+import TodoList from './Todo/TodoList(HttpRequest)';
 import todoContext from '../Context/Todos';
+import Axios from 'axios';
 
 
 
@@ -11,46 +12,77 @@ import todoContext from '../Context/Todos';
 class App extends Component{
 
     // state = {
-    //     fromInput : '',
-    //     todos : []
+    //     todos : [],
+    //     statusDone : false
     // }
 
-    state = {
-        todos : [],
-        statusDone : false
+    constructor(props){
+        super(props)
+        this.state = {
+            todos : [],
+            statusDone : false
+        }
+        Axios.get('https://react-course-f83b2.firebaseio.com/todos.json')
+        .then(response => this.jsonHandler(response.data))
+        .catch(err => console.log(err));
     }
     
-    addTodo(text){
+    addTodo(todo){
+        // console.log('amin');
+        // console.log(todo);
         this.setState(prevState => {
             return {
                 todos : [
                     ...prevState.todos,
-                    {key : Date.now() , done : false , text : text}
+                    todo
                 ] ,
                 fromInput : ''                       
             }
         })
 
     }
+
+    addTodos(todo){
+        // console.log('amin');
+        // console.log(todo);
+        this.setState(prevState => {
+            return {
+                todos : todo
+                ,
+                fromInput : ''                       
+            }
+        });
+
+    }
     
     deleteTodo(key){
-       this.setState(prevState => {
-           return {
-               todos : prevState.todos.filter(item => item.key !== key)
-           }
-       })
+
+        Axios.delete(`https://react-course-f83b2.firebaseio.com/todos/${key}.json`)
+        .then(response => {
+            this.setState(prevState => {
+                return {
+                    todos : prevState.todos.filter(item => item.key !== key)
+                }
+            })
+        })
+        .catch(err => console.log(err));
+   
     }
 
   doneTodo(key){
+
         let {todos} = this.state;
         let item = todos.find(x=>x.key === key);   
         let NewTodo = todos.filter(y=>y.key !== key); 
         item.done = true; 
-        this.setState(prevState =>{
+        Axios.put(`https://react-course-f83b2.firebaseio.com/todos/${key}.json`, {text:item.text, done:item.done})
+         .then(Response =>  {   this.setState(prevState =>{
             return {
                 todos : [...NewTodo,item]
             }
-        })
+        })})
+        .catch(err => console.log(err))    
+     
     }
 
     editTodo(key, text){
@@ -65,31 +97,24 @@ class App extends Component{
         })
     }
 
+    jsonHandler(data){
+        let tempTodo = Object.entries(data)
+        .map(([key , value]) => {
+            return {
+                ...value,
+                key
+            }
+        });
 
-// formHandler(e) {
-//     //ta zamani ke man nakhastam be jayee sybmit ersal nashe
-//     e.preventDefault();
-//     console.log('submit');
+       this.addTodos(tempTodo);
+    }
 
-//     this.setState(prevState => {
-//         return {
-//             todos : [
-//                 ...prevState.todos,
-//                 {key : Date.now() , done : false , text : prevState.fromInput}
-//             ] ,
-//             fromInput : ''                       
-//         }
-//     })
-// }
-
-
-
-// inputHandler(e) {
-//     console.log(e.target.value);
-//     this.setState({ fromInput: e.target.value});
-// }
 
 render(){
+   
+
+     //console.log('test');
+
 
     return(
         <>
