@@ -1,32 +1,37 @@
 import React , { Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import Header from './Layout/Header';
-import FormAddTodo from './Todo/FormAddTodo(HttpRequest)';
-import TodoList from './Todo/TodoList(HttpRequest)';
 import todoContext from '../Context/Todos';
 // import Axios from 'axios';
 import axios1 from './../Api/ApiTodos';
+import {Route, BrowserRouter as MainRouter} from 'react-router-dom';
+import Home from './../Routes/Home'
+import About from './../Routes/About'
+import Contact from './../Routes/Contact'
 
 
 
 
 class App extends Component{
 
-    // state = {
-    //     todos : [],
-    //     statusDone : false
-    // }
+    state = {
+                todos : [],
+                statusDone : false
+            }
 
-    constructor(props){
-        super(props)
-        this.state = {
-            todos : [],
-            statusDone : false
-        }
-        axios1.get('/todos.json')
-        .then(response => this.jsonHandler(response.data))
-        .catch(err => console.log(err));
-    }
+    // constructor(props){           
+    //     super(props)
+    //     this.state = {
+    //         todos : [],
+    //         statusDone : false
+    //     }
+
+    //     this.loading = true;
+
+    //     axios1.get('/todos.json')
+    //     .then(response => this.jsonHandler(response.data))
+    //     .catch(err => console.log(err));
+    // }
     
     addTodo(todo){
         // console.log('amin');
@@ -98,17 +103,18 @@ class App extends Component{
         })
     }
 
-    jsonHandler(data){
-        let tempTodo = Object.entries(data)
-        .map(([key , value]) => {
-            return {
-                ...value,
-                key
-            }
-        });
+    // jsonHandler(data){
+    //     this.loading = false;
+    //     let tempTodo = Object.entries(data)
+    //     .map(([key , value]) => {
+    //         return {
+    //             ...value,
+    //             key
+    //         }
+    //     });
 
-       this.addTodos(tempTodo);
-    }
+    //    this.addTodos(tempTodo);
+    // }
 
 
 render(){
@@ -118,7 +124,7 @@ render(){
 
 
     return(
-        <>
+        <MainRouter>
         <Header/>
         <todoContext.Provider value={{
              todos: this.state.todos,
@@ -128,38 +134,13 @@ render(){
              edit: this.editTodo.bind(this),
          }}> 
         <main> 
-          <section className="jumbotron">
-            <div className="container d-flex flex-column align-items-center">
-                <h1 className="jumbotron-heading">Welcome!</h1>
-                <p className="lead text-muted">To get started, add some items to your list:</p>
-
-                {/* <form className="form-inline" onSubmit={this.formHandler.bind(this)}>
-                  <div className="form-group">
-                    <input type="text" value = {this.state.fromInput} className="form-control mx-sm-3" onChange={this.inputHandler.bind(this)}  placeholder="i want to do ..."/>
-                    <button type="submit" className="btn btn-primary">add</button>
-                  </div>
-                </form> */}
-
-           <FormAddTodo  add={this.addTodo.bind(this)}/>
-
-            </div> 
-          </section>
-          <div className="todosList">
-                <div className="container">
-                    <div className="d-flex flex-column align-items-center ">
-                          <TodoList 
-                           todos={this.state.todos}
-                           delete = {this.deleteTodo.bind(this)}  
-                           done = {this.doneTodo.bind(this)}  
-                           edit = {this.editTodo.bind(this)}  
-                           />
-                    </div>
-              
-                </div>
-          </div>
+             <Route path="/" exact component={Home} />
+             <Route path='/about' component={About}/>
+             <Route path='/contact' component={Contact}/>
+             <Route path='/testmenu' render={() => <h2>test menu</h2>}/>
         </main>
         </todoContext.Provider>
-    </>
+    </MainRouter>
     )
    
 }

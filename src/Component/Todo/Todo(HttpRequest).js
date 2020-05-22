@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import EditTodos from './EditTodo';
 import TodoContext from '../../Context/Todos';
-import Axios from 'axios';
+import Axios from './../../Api/ApiTodos';
 
 
 

@@ -9,7 +9,7 @@ function TodoList(props){
      const todosContext = useContext(TodoContext)
      let { todos } = todosContext;
      let filterTodos = todos.filter(item => item.done === statusDone)
-     console.log(todosContext);
+     console.log(filterTodos,'testtttt');
     return(
         <>
             <nav className="col-6 mb-3">
