@@ -11,12 +11,15 @@ function Home() {
     const todoContext = useContext(TodoContext);
     useEffect(() => {
         setLoading(true);
+        console.log('hi')
         axios1.get(`/todos.json`)
-        .then(response => jsonHandler(response.date))
+        .then(response => jsonHandler(response.data))
         .catch(err => {});
     },[])
 
     let jsonHandler = (data) => {
+        console.log('zero')
+     
         setLoading(false);
         let tempTodo = Object.entries(data)
         .map(([key , value]) => {
@@ -25,8 +28,9 @@ function Home() {
                 key
             }
         });
+        console.log(tempTodo, 'soosan')
 
-        todoContext.addTodos(tempTodo);
+        todoContext.adds(tempTodo);
     }
 
     return (

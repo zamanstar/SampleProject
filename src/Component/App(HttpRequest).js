@@ -8,6 +8,7 @@ import {Route, BrowserRouter as MainRouter} from 'react-router-dom';
 import Home from './../Routes/Home'
 import About from './../Routes/About'
 import Contact from './../Routes/Contact'
+import Todo from '../Routes/Todo(func)';
 
 
 
@@ -49,8 +50,8 @@ class App extends Component{
     }
 
     addTodos(todo){
-        // console.log('amin');
-        // console.log(todo);
+         console.log('amin');
+         console.log(todo);
         this.setState(prevState => {
             return {
                 todos : todo
@@ -129,6 +130,7 @@ render(){
         <todoContext.Provider value={{
              todos: this.state.todos,
              add: this.addTodo.bind(this),
+             adds: this.addTodos.bind(this),
              done: this.doneTodo.bind(this),
              delete: this.deleteTodo.bind(this),
              edit: this.editTodo.bind(this),
@@ -138,6 +140,11 @@ render(){
              <Route path='/about' component={About}/>
              <Route path='/contact' component={Contact}/>
              <Route path='/testmenu' render={() => <h2>test menu</h2>}/>
+             <Route path='/todos/:todo' component={Todo}/>
+
+             {/* in adresse paeeen ro bezani rout mifahme ke on testttt ye parametre */}
+             {/* localhost3000/courses/testttt/create */}
+             <Route path='/todo/:id/create' component={Todo}/>
         </main>
         </todoContext.Provider>
     </MainRouter>

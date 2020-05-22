@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import EditTodos from './EditTodo';
 import TodoContext from '../../Context/Todos';
 import Axios from './../../Api/ApiTodos';
+import { Link } from 'react-router-dom';
 
 
 
@@ -26,7 +27,7 @@ return (
         <div className="col-6 mb-2">
             <div className="d-flex justify-content-between align-items-center border rounded p-3">
                 <div>
-                    {props.item.text}
+                    <Link to={`/todos/${props.item.key}`}>{props.item.text}</Link>
                 </div>
                 <div>
                     <button type="button" onClick={() => todosContext.done(props.item.key)} className="btn btn-success btn-sm mr-1">Done</button>

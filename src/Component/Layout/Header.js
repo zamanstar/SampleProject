@@ -38,6 +38,9 @@ function Header(){
                         {/* <Link className="nav-link" to={location => console.log(location)}>Contact</Link> */}
                         <NavLink className="nav-link" to={location => `/contact${location.search}`}>Contact</NavLink>
                     </li>
+                    {/* <li className="nav-item">
+                        <NavLink className="nav-link" to="/" >Todo</NavLink>
+                    </li> */}
                 </ul>
             </div>
         </div>
