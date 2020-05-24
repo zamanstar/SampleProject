@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import TodoApi from './../Api/ApiTodos'
 
 function Todo(props){
@@ -8,12 +8,22 @@ function Todo(props){
         const params = useParams();
         console.log(params);
         const [todo, setTodo] = useState({});
-
+        const history = useHistory();
         useEffect(()=>{
             TodoApi.get(`/todos/${params.todo}.json`)
             .then(Response => {
                
-                setTodo({...Response.data , key : params.todo});
+                if(Response.data){
+
+                    setTodo({...Response.data , key : params.todo});       
+                }
+                else
+                {
+                    //redirect to 404 page
+                    // props.history.push('/404');
+                    history.push('/404');
+                }
+                
             })
             .catch(err => console.log(err))
         },[])

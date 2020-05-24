@@ -5,10 +5,24 @@ import todoContext from '../Context/Todos';
 // import Axios from 'axios';
 import axios1 from './../Api/ApiTodos';
 import {Route, BrowserRouter as MainRouter,Switch} from 'react-router-dom';
-import Home from './../Routes/Home'
-import About from './../Routes/About'
-import Contact from './../Routes/Contact'
-import Todo from '../Routes/Todo(func)';
+// import AsyncComponent from './../AsyncComponent';
+import loadable from '@loadable/component';
+
+//imports Routes
+// import Home from './../Routes/Home'
+// import About from './../Routes/About'
+// import Contact from './../Routes/Contact'
+// import Todo from '../Routes/Todo(func)';
+// import NotFound from '../Routes/NotFound';
+
+//in baraye lazy loading hast hame ro intoi benevis
+// const About = AsyncComponent(() => import('../Routes/About').then(module => module.default));
+
+const Home = loadable(() => import('./../Routes/Home'));
+const About = loadable(() => import('./../Routes/About'));
+const Contact = loadable(() => import('./../Routes/Contact'));
+const Todo = loadable(() => import('./../Routes/Todo'));
+const NotFound = loadable(() => import('./../Routes/NotFound'));
 
 
 
@@ -138,20 +152,22 @@ render(){
         <main> 
             {/* switch be in soorat hast ke router haye dakhelesho az bala be tartib check mikone
             be har rout dorost ke resid dige miad birun va baadi ro niga nemikone */}
-            <switch>
+            <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path='/about' component={About}/>
                 <Route path='/contact' component={Contact}/>
-                <Route path='/testmenu' render={() => <h2>test menu</h2>}/>
+                {/* <Route path='/testmenu' render={() => <h2>test menu</h2>}/> */}
                 <Route path='/todos/:todo' component={Todo}/>
+                <Route path='/404' component = {NotFound}/>
+                <Route path='' component = {NotFound}/>
                 
                  {/* in nemune mige baade rot asli har hi omad be onvane todo shenakhte beshe
                 <Route path='/:todo' component={Todo}/> */}
-             </switch>
+             </Switch>
 
              {/* in adresse paeeen ro bezani rout mifahme ke on testttt ye parametre */}
              {/* localhost3000/courses/testttt/create */}
-             <Route path='/todo/:id/create' component={Todo}/>
+             {/* <Route path='/todo/:id/create' component={Todo}/> */}
         </main>
         </todoContext.Provider>
     </MainRouter>
