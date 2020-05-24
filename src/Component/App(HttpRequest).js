@@ -4,7 +4,7 @@ import Header from './Layout/Header';
 import todoContext from '../Context/Todos';
 // import Axios from 'axios';
 import axios1 from './../Api/ApiTodos';
-import {Route, BrowserRouter as MainRouter} from 'react-router-dom';
+import {Route, BrowserRouter as MainRouter,Switch} from 'react-router-dom';
 import Home from './../Routes/Home'
 import About from './../Routes/About'
 import Contact from './../Routes/Contact'
@@ -136,11 +136,18 @@ render(){
              edit: this.editTodo.bind(this),
          }}> 
         <main> 
-             <Route path="/" exact component={Home} />
-             <Route path='/about' component={About}/>
-             <Route path='/contact' component={Contact}/>
-             <Route path='/testmenu' render={() => <h2>test menu</h2>}/>
-             <Route path='/todos/:todo' component={Todo}/>
+            {/* switch be in soorat hast ke router haye dakhelesho az bala be tartib check mikone
+            be har rout dorost ke resid dige miad birun va baadi ro niga nemikone */}
+            <switch>
+                <Route path="/" exact component={Home} />
+                <Route path='/about' component={About}/>
+                <Route path='/contact' component={Contact}/>
+                <Route path='/testmenu' render={() => <h2>test menu</h2>}/>
+                <Route path='/todos/:todo' component={Todo}/>
+                
+                 {/* in nemune mige baade rot asli har hi omad be onvane todo shenakhte beshe
+                <Route path='/:todo' component={Todo}/> */}
+             </switch>
 
              {/* in adresse paeeen ro bezani rout mifahme ke on testttt ye parametre */}
              {/* localhost3000/courses/testttt/create */}
